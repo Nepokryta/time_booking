@@ -1,3 +1,5 @@
+@import "../styles/variables"
+    
 .header
     display: flex
     justify-content: space-between
@@ -8,7 +10,7 @@
     font-weight: 600
 
 .btn_week
-    color:#494949
+    color:$black
     background: none
     border: none
     font-size: 15px
@@ -23,11 +25,11 @@
         width: 8px
         height: 8px
         top: 5px
-        border-left: 4px solid #3968cb
-        border-top: 4px solid #3968cb
+        border-left: 4px solid $blueTimeSlot
+        border-top: 4px solid $blueTimeSlot
         border-radius: 2px
     &:hover
-        color: #1c1c1c
+        color: $grey
         transition: all .3s ease
             
 .prev
