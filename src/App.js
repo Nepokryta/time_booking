@@ -64,14 +64,12 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch(`http://localhost:3000/weeks/${currWeek}`);
-        // const response = await fetch('https://api.npoint.io/695f083b025fc7c7c739/$4');
         if (!response.ok) {
           throw new Error(`Error:${response.status}`);
         }
         const data = await response.json();
         setCurrWeekData(filterWeekData(data, currWeek));
       } catch (error) {
-        console.error('Error', error);
         setErrorData(true);
       } finally {
         setIsLoading(false);
