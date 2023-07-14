@@ -1,6 +1,6 @@
 import React from 'react';
 import Available from '../../assets/img/nothing-available.jpg';
-import './sass/Week.sass';
+import './Week.sass';
 
 function NoAvailableWeek() {
   return (

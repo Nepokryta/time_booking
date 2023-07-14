@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import Day from '../Day/Day';
 import NoAvailableWeek from './NoAvailableWeek';
 
-import './sass/Week.sass';
+import './Week.sass';
 
-function Week({ filterWeekData }) {
-  const isAllEmpty = filterWeekData.every((item) => item.time.length === 0);
+function Week({ daysCurrWeekData }) {
+  const isAllEmpty = daysCurrWeekData.every((item) => item.time.length === 0);
 
   if (isAllEmpty) {
     return <NoAvailableWeek />;
   }
 
-  const elements = filterWeekData.map((item) => (
-    <Day key={item.id} date={item.date} time={item.time} />
+  const elements = daysCurrWeekData.map((item) => (
+    <Day key={item.date} date={item.date} time={item.time} />
   ));
 
   return (
@@ -24,7 +24,7 @@ function Week({ filterWeekData }) {
 }
 
 Week.propTypes = {
-  filterWeekData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  daysCurrWeekData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default Week;
