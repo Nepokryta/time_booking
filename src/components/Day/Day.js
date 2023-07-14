@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import getDateInfo from '../getDateInfo/getDateInfo';
+import getDateName from '../../helpers/getDateName';
 
-import './sass/Day.sass';
+import './Day.sass';
 
 function Day({ date, time }) {
-  const nameDate = getDateInfo(date);
+  const nameDate = getDateName(date);
   const classNameForWeekDay = (nameDate.weekDayShort === 'Sat' || nameDate.weekDayShort === 'Sun') 
     ? 'week_day-off' : 'week_day';
   
