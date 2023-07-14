@@ -5,11 +5,12 @@ import Header from './components/Header/Header';
 import Week from './components/Week/Week';
 import Loading from './assets/img/waiting.gif';
 import Footer from './components/Footer/Footer';
+import formatDate from './helpers/formatDate';
+import fillEmptyData from './helpers/fillEmptyData';
 
 function App() {
   const [currWeek, setCurrWeek] = useState(null);
   const [currWeekData, setCurrWeekData] = useState(null);
-  const [errorData, setErrorData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -23,7 +24,6 @@ function App() {
     const realCurrWeek = getCurrentWeekNumber();
 
     if (realCurrWeek > selectedWeek) {
-      // очистить время
       return {
         ...data,
         days: data.days.map((d) => ({
@@ -39,9 +39,7 @@ function App() {
     // const today = new Date();
     const today = new Date('July 12, 2023 10:24:00');
     const timeNow = today.toTimeString().split(' ')[0];
-    const todayDate = `${today.getFullYear()}-${(today.getMonth() + 1) < 10 
-      ? `0${today.getMonth() + 1}` : (today.getMonth() + 1)}-${today.getDate() < 10 
-      ? `0${today.getDate()}` : today.getDate()}`;
+    const todayDate = formatDate(today);
 
     for (let i = 0; i < weekDataToReturn.days.length; i += 1) {
       const currentDay = weekDataToReturn.days[i];
@@ -62,35 +60,30 @@ function App() {
     }
     setIsLoading(true);
     const fetchData = async () => {
+      let data;
       try {
-        const response = await fetch(`http://localhost:3000/weeks/${currWeek}`);
+        const response = await fetch(`http://localhost:3001/weeks/${currWeek}`);
+        data = await response.json();
         if (!response.ok) {
           throw new Error(`Error:${response.status}`);
         }
-        const data = await response.json();
-        setCurrWeekData(filterWeekData(data, currWeek));
       } catch (error) {
-        setErrorData(true);
+        data = fillEmptyData(2023, currWeek);
       } finally {
         setIsLoading(false);
+        setCurrWeekData(filterWeekData(data, currWeek));
       }
     };
-    setTimeout(() => {
-      fetchData();
-    }, 1000);
+    fetchData();
   }, [currWeek]);
 
   const showPrevWeek = () => {
     setCurrWeek((prevIndex) => (prevIndex - 1));
   };
-
+  //   console.log(currWeek);
   const showNextWeek = () => {
     setCurrWeek((prevIndex) => (prevIndex + 1));
   };
-
-  if (errorData) {
-    return <h2 className="error_message">We&apos;re very sorry for the error.</h2>;
-  }
 
   return (
     (currWeekData !== null) ? (
